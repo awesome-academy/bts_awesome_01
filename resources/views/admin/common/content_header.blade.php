@@ -1,5 +1,8 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
+    <div class="spacer">
+        &nbsp;
+    </div>
     <h1>
         Simple Tables
         <small>preview of simple tables</small>

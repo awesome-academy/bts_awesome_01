@@ -12,9 +12,10 @@
 */
 
 /* Web routes for admin */
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    //
-});
+Route::group(['prefix' => 'admin'/* , 'middleware' => 'admin' */], function () {
+     Route::get('/', 'AdminController@index')->name('dashboard');
+     Route::get('/tour', 'AdminController@tour')->name('admin-tour');
+ });
 
 /* Web routes for authen */
 Route::group(['prefix' => 'account'], function () {
