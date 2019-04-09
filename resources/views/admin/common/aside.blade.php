@@ -25,13 +25,16 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="treeview">
-                <a href="#">
+            <li>
+                <a href="{{ route('dashboard') }}">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
-            <li class="treeview">
+            <li>
                 <a href="#"> <i class="fa fa-user"></i> <span>User</span> </a>
+            </li>
+            <li>
+                <a href="{{ route('admin-tour') }}"> <i class="fa fa-bus"></i> <span>Tour</span> </a>
             </li>
         </ul>    
     </section>
