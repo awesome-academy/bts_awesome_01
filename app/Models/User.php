@@ -44,11 +44,15 @@ class User extends Authenticatable
     ];
 
     public function tourFavorites(){
-        return $this->hasMany(Tour::class, 'user_favorites');
+        return $this->belongsToMany(Tour::class, 'user_favorites');
     }
 
     public function tourRates(){
-        return $this->hasMany(Tour::class, 'user_rates');
+        return $this->belongsToMany(Tour::class, 'user_rates');
+    }
+
+    public function userBookings(){
+        return $this->belongsToMany(Tour::class, 'user_bookings');
     }
 
 }

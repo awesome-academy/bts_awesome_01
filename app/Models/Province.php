@@ -8,8 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class Province extends Model
 {
     protected $fillable = ['name'];
-
-    public function days(){
-        return $this->hasMany(Day::class);
-    }
 }

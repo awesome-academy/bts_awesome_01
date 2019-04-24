@@ -14,10 +14,23 @@ class Day extends Model
         'description',
         'start_at',
         'end_at',
-        'price',    
+        'province_id',
+        'tour_id',
     ];
 
     public function tours(){
-        return $this->hasMany(Tour::class);
+        return $this->belongsTo(Tour::class);
+    }
+
+    public function images(){
+        return $this->belongsToMany(Image::class, 'day_images');
+    }
+
+    public function provinces(){
+        return $this->hasOne(Province::class);
+    }
+    
+    public function services(){
+        return $this->belongsToMany(Province::class, 'day_services');
     }
 }

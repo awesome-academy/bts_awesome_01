@@ -13,6 +13,6 @@ class Service extends Model
     ];
 
     public function days(){
-        return $this->hasMany(Day::class);
+        return $this->belongsToMany(Day::class, 'day_services');
     }
 }

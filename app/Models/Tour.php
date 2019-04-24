@@ -16,22 +16,24 @@ class Tour extends Model
         'price',
         'status',
         'avg_rate',
+        'status',
+        'image_id',
     ];
 
     public function categories(){
-        return $this->hasMany(Category::class);
+        return $this->belongsToMany(Category::class, 'tour_categories');
     }
 
     public function userFavorites(){
-        return $this->hasMany(User::class, 'user_favorites');
+        return $this->belongsToMany(User::class, 'user_favorites');
     }
 
     public function userRates(){
-        return $this->hasMany(User::class, 'user_rates');
+        return $this->belongsToMany(User::class, 'user_rates');
     }
 
     public function userBookings(){
-        return $this->hasMany(User::class, 'user_bookings');
+        return $this->belongsToMany(User::class, 'user_bookings');
     }
 
     public function days(){
