@@ -9,10 +9,9 @@ class Image extends Model
 {
     protected $fillable = [
         'name',
-        'url',
     ];
 
     public function days(){
-        return $this->hasMany(Day::class);
+        return $this->belongsToMany(Day::class, 'day_images');
     }
 }
