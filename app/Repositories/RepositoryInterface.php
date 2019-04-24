@@ -75,4 +75,8 @@ interface RepositoryInterface
      * @throws Exception
      */
     public function delete(Model $model);
+
+    public function paginate(int $number_page);
+
+    public function deleteById(int $id);
 }

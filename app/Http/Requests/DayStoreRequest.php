@@ -26,7 +26,7 @@ class DayStoreRequest extends FormRequest
         return [
             'start_date' => 'required',
             'end_date' => 'required',
-            'service' => 'required',
+            'services' => 'required',
             'description' => 'required',
             'images' => 'required',
             'city' => 'required',

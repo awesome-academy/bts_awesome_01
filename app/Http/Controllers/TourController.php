@@ -2,10 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tour;
+use App\Models\Province;
+use App\Models\Service;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Repositories\Tour\TourRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
+use App\Repositories\Service\ServiceRepositoryInterface;
+use App\Repositories\Province\ProvinceRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Http\Requests\TourStoreRequest;
 
 class TourController extends Controller
 {
+    private $tourRepository;
+    private $imageRepository;
+    private $provinceRepoRepository;
+    private $serviceRepoRepository;
+
+    public function __construct(TourRepositoryInterface $tour, ImageRepositoryInterface $image, ProvinceRepositoryInterface $province, ServiceRepositoryInterface $service, CategoryRepositoryInterface $category)
+    {
+        $this->tourRepository = $tour;
+        $this->imageRepository = $image;
+        $this->provinceRepository = $province;
+        $this->serviceRepository = $service;
+        $this->categoryRepository = $category;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +45,22 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $provinces = $this->provinceRepository->all();
+        $services = $this->serviceRepository->all();
+        $categories = $this->categoryRepository->all();
+
+        if($request->ajax()){
+            $response = [
+                'provinces' => $provinces,
+                'services' => $services,
+                'categories' => $categories,
+            ];
+             return response()->json($response);
+        }
+
+        return view('admin.modules.tour',compact('provinces','services'));
     }
 
     /**
@@ -34,22 +71,24 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:5',
-            'price' => 'required',
-            'duration' => 'required',
-            'description' => 'required',
-            'image' => 'required',
+        $image = $this->imageRepository->saveTourImage($request->image);
+        $imageId = $this->imageRepository->firstOrCreate(['name' => $image],['name' => $image]);
+        $tour = $this->tourRepository->create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'duration' => $request->duration,
+            'description' => $request->description,
+            'status' => $request->status,
+            'image_id' => $imageId->id,
         ]);
-        Product::create([
-            'name'     => $request->input('name'),
-            'price'    => $request->input('price'),
-            'price'    => $request->input('price'),
-            'price'    => $request->input('price'),
-        ]);
+        foreach ($request->categories as $key => $value){
+            $tour->categories()->attach($value);
+        }
         return response([
-            'result' => 'success'
-        ], 200);
+            'result' => 'success',
+            'tour' => $tour,
+        ]);
+        
     }
 
     /**
@@ -81,7 +120,7 @@ class TourController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tour $tour)
     {
         //
     }
@@ -95,5 +134,15 @@ class TourController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateStatus(Request $request, Tour $tour)
+    {
+        $this->tourRepository->update($tour, [
+            'status' => '1'
+        ]);
+        return response([
+            'result' => 'success',
+        ]);
     }
 }

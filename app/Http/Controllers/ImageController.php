@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use Illuminate\Http\Request;
+use App\Repositories\Image\ImageRepositoryInterface;
 
-class AdminController extends Controller
+class ImageController extends Controller
 {
+    private $imageRepoRepository;
+
+    public function __construct(ImageRepositoryInterface $image)
+    {
+        $this->imageRepository = $image;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +22,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.modules.dashboard');
+        //
     }
 
     /**
@@ -77,8 +86,11 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Image $image)
     {
-        //
+        $this->imageRepository->delete($image);
+        return response([
+            'result' => 'success',
+        ]);
     }
 }

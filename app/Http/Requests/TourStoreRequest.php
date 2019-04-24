@@ -29,6 +29,7 @@ class TourStoreRequest extends FormRequest
             'duration' => 'required',
             'description' => 'required',
             'image' => 'required',
+            'categories' => 'required',
         ];
     }
 }
