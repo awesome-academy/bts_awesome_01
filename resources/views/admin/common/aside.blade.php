@@ -34,7 +34,7 @@
                 <a href="#"> <i class="fa fa-user"></i> <span>User</span> </a>
             </li>
             <li>
-                <a href="{{ route('admin-tour') }}"> <i class="fa fa-bus"></i> <span>Tour</span> </a>
+                <a href="{{ route('tours.create') }}"> <i class="fa fa-bus"></i> <span>Tour</span> </a>
             </li>
         </ul>    
     </section>

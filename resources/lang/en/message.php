@@ -21,5 +21,6 @@ return [
     'enddate' => 'End Date',
     'service' => 'Service',
     'city' => 'City',
-    'clearall' => 'Clear all',
+    'clearall' => 'Clear All',
+    'noinfor' => 'Please fill all information',
 ];

@@ -31,6 +31,16 @@ class Day extends Model
     }
     
     public function services(){
-        return $this->belongsToMany(Province::class, 'day_services');
+        return $this->belongsToMany(Service::class, 'day_services');
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($day) {
+            $day->images()->detach();
+            $day->services()->detach();
+            $day->images()->delete();
+        });
     }
 }

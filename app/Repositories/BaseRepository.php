@@ -88,4 +88,15 @@ class BaseRepository implements RepositoryInterface
     {
         return $model->delete();
     }
+    
+    public function paginate(int $number_page)
+    {
+        return $this->model->paginate($number_page);
+    }
+
+    public function deleteById(int $id)
+    {
+        $temp = $this->model->where('id', $id)->get();
+        return $temp->delete();
+    }
 }
