@@ -1,18 +1,20 @@
 @extends('layouts.app')
 @section('content')
-<div class="login-box">
+<div class="login-box" id="login-form">
     <div class="login-logo">
         <a href="/"><b>BTS</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">{{ trans('message.signinmessage')}}</p>
-        <form action="../../index2.html" method="post">
-            <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email">
+        <p class="login-box-msg" :class="{'error-login': userNotFound}">@{{ userNotFound ? userNotFound : 'Sign in to start your session' }}</p>
+        <form @submit.prevent="handleLogin">
+            <div class="form-group has-feedback" v-bind:class="{ 'has-error': formErrors && formErrors.email }">
+                <input type="email" class="form-control" v-model="user.email"  placeholder="Email">
+                <span  v-if="formErrors && formErrors.email" class="help-block">@{{ formErrors.email[0] }}</span>
             </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password">
+            <div class="form-group has-feedback" v-bind:class="{ 'has-error': formErrors && formErrors.password }">
+                <input type="password" class="form-control" v-model="user.password" placeholder="Password">
+                <span  v-if="formErrors && formErrors.password" class="help-block">@{{ formErrors.password[0] }}</span> 
             </div>
             <div class="row">
                 <div class="col-xs-8">
@@ -34,4 +36,7 @@
     </div>
     <!-- /.login-box-body -->
 </div>
+@endsection
+@section('script')
+    <script src="{{ asset('/js/auth/login.js') }}"></script>
 @endsection

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Image\ImageRepositoryInterface;
+use App\Http\Requests\RegisterRequest;
 
 class RegisterController extends Controller
 {
@@ -22,6 +26,8 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    private $userRepository;
+    private $imageRepository;
 
     /**
      * Where to redirect users after registration.
@@ -35,8 +41,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepositoryInterface $userRepo, ImageRepositoryInterface $imageRepo)
     {
+        $this->userRepository = $userRepo; 
+        $this->imageRepository = $imageRepo; 
         $this->middleware('guest');
     }
 
@@ -67,6 +75,33 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+        ]);
+    }
+
+    public function register()
+    {
+        return view('auth.register');
+    }
+
+    public function handleRegister(RegisterRequest $request)
+    {
+        if ($request->avatar){
+            $avatar = $this->imageRepository->saveTourImage($request->avatar);
+            $user = $this->userRepository->create([
+                'name' => $request->name ,
+                'email' => $request->email,
+                'avatar' => $avatar,
+                'password' => Hash::make($request->password),
+            ]);
+        } else {
+            $user = $this->userRepository->create([
+                'name' => $request->name ,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+        }
+        return response([
+            'result' => 'success',
         ]);
     }
 }

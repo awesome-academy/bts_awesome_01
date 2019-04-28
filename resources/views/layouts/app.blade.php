@@ -21,4 +21,5 @@
 </body>
     <!-- Scripts -->
     <script src="{{ asset('js/common_js/admin/admin.js') }}"></script>
+    @yield('script')
 </html>

@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="../../index2.html" class="logo">
+    <a href="{{ asset('/admin') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">BTS</span>
         <!-- logo for regular state and mobile devices -->
@@ -41,16 +41,15 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="../../dist/img/user.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : 'dist/img/usernone.png' }}" class="user-image" alt="User Image">
+                        <span class="hidden-xs"{{ Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="../../dist/img/user.jpg" class="img-circle" alt="User Image">
-                            <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                            <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : 'dist/img/usernone.png' }}" class="img-circle" alt="User Image">
+                            <p>{{ Auth::user()->name }}
+                                <small>Member since {{ Auth::user()->created_at }}</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -74,7 +73,7 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

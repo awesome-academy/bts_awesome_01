@@ -111,7 +111,7 @@ new Vue({
                 for (var i=0; i< files.length; i++){
                     this.createImage(files[i],v);
                 }
-            }
+            }   
             else if (files.length = 1)  {
                 this.createImage(files[0],v)
             }
@@ -131,14 +131,6 @@ new Vue({
                 this.days.url.push(URL.createObjectURL(file));
             }
             reader.readAsDataURL(file);
-        },
-        dataURLtoFile(dataurl, filename) {
-            var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-            while(n--){
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new File([u8arr], filename, {type:mime});
         },
         addService(days) {
             var self = this
