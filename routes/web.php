@@ -15,7 +15,7 @@
 
 
 /* Web routes for admin */
-Route::group(['prefix' => 'admin'/* , 'middleware' => 'admin' */], function () {
+Route::group(['prefix' => 'admin', /* 'middleware' => 'admin' */], function () {
     Route::resource('tours', 'TourController');
     Route::put('/tours/updatestatus/{tour}', 'TourController@updateStatus');
     Route::resource('days', 'DayController');
@@ -27,6 +27,10 @@ Route::group(['prefix' => 'admin'/* , 'middleware' => 'admin' */], function () {
 /* Web routes for authen */
 Route::group(['prefix' => 'account'], function () {
     Route::get('login', 'Auth\LoginController@login')->name('login');
+    Route::post('handle-login','Auth\LoginController@handleLogin')->name('handle-login');
+    Route::get('/register', 'Auth\RegisterController@register')->name('register');
+    Route::post('handle-register','Auth\RegisterController@handleRegister')->name('handle-register');
+    Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 });
 
 /* Web routes for user */

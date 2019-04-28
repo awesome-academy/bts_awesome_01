@@ -16,8 +16,12 @@
                         </ul>
                     </div>
                     <div class="user_box ml-auto">
-                        <div class="user_box_login user_box_link"><a href="/account/login">login</a></div>
-                        <div class="user_box_register user_box_link"><a href="#">register</a></div>
+                        @if (Auth::user())
+                            <div class="user_box_register user_box_link"><a href="{{ route('logout') }}">logOut</a></div>
+                            @else
+                            <div class="user_box_login user_box_link"><a href="{{ route('login') }}">login</a></div>
+                            <div class="user_box_register user_box_link"><a href="{{ route('register') }}">register</a></div>
+                        @endif
                     </div>
                 </div>
             </div>
